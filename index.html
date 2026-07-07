@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master List Supplier Evaluation</title>
+    <meta name="description" content="Pharmaceutical Supplier Master List - Enterprise Qualification Management System">
+    <meta name="keywords" content="pharmaceutical, supplier, GMP, quality management">
+    <title>Master List Supplier Evaluation - GMP Quality Management</title>
     <style>
         :root {
           --pharma-bg-primary: #ffffff;
@@ -17,12 +19,16 @@
           --border-radius-md: 8px;
           --border-radius-sm: 4px;
         }
+        * {
+          box-sizing: border-box;
+        }
         body {
           background-color: var(--pharma-bg-secondary);
           margin: 0;
           padding: 24px;
           font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", Roboto, Arial, sans-serif;
           color: var(--pharma-text-main);
+          line-height: 1.6;
         }
         header {
           display: flex;
@@ -152,7 +158,14 @@
           box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
           border: 1px solid #e2e8f0;
         }
-        .section-title { font-size: 18px; color: var(--pharma-accent-primary); margin: 0 0 20px 0; border-left: 4px solid var(--pharma-accent-primary); padding-left: 10px; }
+        .section-title { 
+          font-size: 18px; 
+          color: var(--pharma-accent-primary); 
+          margin: 0 0 20px 0; 
+          border-left: 4px solid var(--pharma-accent-primary); 
+          padding-left: 10px; 
+          font-weight: 700;
+        }
         
         .form-grid {
           display: grid;
@@ -160,16 +173,40 @@
           gap: 15px;
           margin-bottom: 20px;
         }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-size: 12px; font-weight: 600; color: var(--pharma-text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group { 
+          display: flex; 
+          flex-direction: column; 
+        }
+        .form-group label { 
+          font-size: 12px; 
+          font-weight: 600; 
+          color: var(--pharma-text-muted); 
+          margin-bottom: 5px; 
+          text-transform: uppercase; 
+          letter-spacing: 0.5px; 
+        }
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
           padding: 8px 12px;
           font-size: 13px;
           border: 1px solid var(--pharma-border-color);
           border-radius: var(--border-radius-sm);
           font-family: inherit;
+          transition: border-color 0.2s;
         }
-        .form-group textarea { resize: vertical; height: 36px; }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+          outline: none;
+          border-color: var(--pharma-accent-primary);
+          box-shadow: 0 0 0 3px var(--pharma-accent-light);
+        }
+        .form-group textarea { 
+          resize: vertical; 
+          height: 80px; 
+          min-height: 60px;
+        }
         
         .table-toolbar {
           display: flex;
@@ -191,11 +228,41 @@
           border-radius: var(--border-radius-sm);
           box-sizing: border-box;
         }
-        .data-table-viewport { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: var(--border-radius-sm); background: #fff; }
-        .enterprise-data-matrix { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; table-layout: auto; }
-        .enterprise-data-matrix th { background-color: #f8fafc; color: var(--pharma-text-muted); padding: 12px 14px; border-bottom: 2px solid #e2e8f0; font-weight: 700; white-space: nowrap; }
-        .enterprise-data-matrix td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; background-color: #ffffff; white-space: nowrap; max-width: 250px; overflow: hidden; text-overflow: ellipsis; }
-        .enterprise-data-matrix tr:hover td { background-color: #f8fafc; }
+        .data-table-viewport { 
+          overflow-x: auto; 
+          border: 1px solid #e2e8f0; 
+          border-radius: var(--border-radius-sm); 
+          background: #fff; 
+        }
+        .enterprise-data-matrix { 
+          width: 100%; 
+          border-collapse: collapse; 
+          text-align: left; 
+          font-size: 12px; 
+          table-layout: auto; 
+        }
+        .enterprise-data-matrix th { 
+          background-color: #f8fafc; 
+          color: var(--pharma-text-muted); 
+          padding: 12px 14px; 
+          border-bottom: 2px solid #e2e8f0; 
+          font-weight: 700; 
+          white-space: nowrap; 
+          position: sticky;
+          top: 0;
+        }
+        .enterprise-data-matrix td { 
+          padding: 10px 14px; 
+          border-bottom: 1px solid #e2e8f0; 
+          background-color: #ffffff; 
+          white-space: nowrap; 
+          max-width: 250px; 
+          overflow: hidden; 
+          text-overflow: ellipsis; 
+        }
+        .enterprise-data-matrix tr:hover td { 
+          background-color: #f8fafc; 
+        }
         
         .table-counter-summary {
           margin-top: 12px;
@@ -208,15 +275,33 @@
         }
         .counter-badge {
           background-color: var(--pharma-accent-light);
-          padding: 2px 8px;
+          padding: 4px 12px;
           border-radius: 20px;
           border: 1px solid #bee3f8;
+          font-weight: 800;
+          font-size: 14px;
         }
 
-        .btn { padding: 10px 20px; font-size: 13px; font-weight: 600; border-radius: var(--border-radius-sm); border: none; cursor: pointer; background-color: var(--pharma-accent-primary); color: white; transition: background 0.2s; }
-        .btn:hover { background-color: #002244; }
-        .btn-cancel { background-color: var(--pharma-text-muted); }
-        .btn-cancel:hover { background-color: #475569; }
+        .btn { 
+          padding: 10px 20px; 
+          font-size: 13px; 
+          font-weight: 600; 
+          border-radius: var(--border-radius-sm); 
+          border: none; 
+          cursor: pointer; 
+          background-color: var(--pharma-accent-primary); 
+          color: white; 
+          transition: background 0.2s; 
+        }
+        .btn:hover { 
+          background-color: #002244; 
+        }
+        .btn-cancel { 
+          background-color: var(--pharma-text-muted); 
+        }
+        .btn-cancel:hover { 
+          background-color: #475569; 
+        }
         
         .btn-audit-toggle {
           background-color: #334155;
@@ -235,34 +320,125 @@
           transition: background 0.2s;
           margin-bottom: 10px;
         }
-        .btn-audit-toggle:hover { background-color: #1e293b; }
+        .btn-audit-toggle:hover { 
+          background-color: #1e293b; 
+        }
 
-        .action-icon-btn { background: none; border: 1px solid var(--pharma-border-color); padding: 4px 8px; cursor: pointer; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 3px; }
-        .action-icon-btn.view-btn { color: #0284c7; border-color: #bae6fd; }
-        .action-icon-btn.view-btn:hover { background-color: #f0f9ff; }
-        .action-icon-btn.edit-btn { color: var(--pharma-accent-primary); border-color: #bfdbfe; }
-        .action-icon-btn.edit-btn:hover { background-color: #eff6ff; }
-        .action-icon-btn.delete-btn { color: var(--gmp-state-danger); border-color: #fecaca; }
-        .action-icon-btn.delete-btn:hover { background-color: #fef2f2; }
+        .action-icon-btn { 
+          background: none; 
+          border: 1px solid var(--pharma-border-color); 
+          padding: 4px 8px; 
+          cursor: pointer; 
+          border-radius: 4px; 
+          font-size: 11px; 
+          font-weight: 600; 
+          margin-right: 3px; 
+          transition: all 0.2s;
+        }
+        .action-icon-btn.view-btn { 
+          color: #0284c7; 
+          border-color: #bae6fd; 
+        }
+        .action-icon-btn.view-btn:hover { 
+          background-color: #f0f9ff; 
+        }
+        .action-icon-btn.edit-btn { 
+          color: var(--pharma-accent-primary); 
+          border-color: #bfdbfe; 
+        }
+        .action-icon-btn.edit-btn:hover { 
+          background-color: #eff6ff; 
+        }
+        .action-icon-btn.delete-btn { 
+          color: var(--gmp-state-danger); 
+          border-color: #fecaca; 
+        }
+        .action-icon-btn.delete-btn:hover { 
+          background-color: #fef2f2; 
+        }
         
-        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-block; text-align: center; }
-        .badge-approved-active { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-        .badge-approved-inactive { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-        .badge-not-approved { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
-        .badge-suspended { background-color: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-        .badge-default { background-color: #e2e8f0; color: #1e293b; }
+        .badge { 
+          padding: 4px 10px; 
+          border-radius: 4px; 
+          font-size: 11px; 
+          font-weight: 700; 
+          display: inline-block; 
+          text-align: center; 
+        }
+        .badge-approved-active { 
+          background-color: #dcfce7; 
+          color: #15803d; 
+          border: 1px solid #bbf7d0; 
+        }
+        .badge-approved-inactive { 
+          background-color: #f1f5f9; 
+          color: #475569; 
+          border: 1px solid #e2e8f0; 
+        }
+        .badge-not-approved { 
+          background-color: #fee2e2; 
+          color: #b91c1c; 
+          border: 1px solid #fecaca; 
+        }
+        .badge-suspended { 
+          background-color: #fef3c7; 
+          color: #d97706; 
+          border: 1px solid #fde68a; 
+        }
+        .badge-default { 
+          background-color: #e2e8f0; 
+          color: #1e293b; 
+        }
         
-        .audit-wrapper-collapse { display: none; }
-        .audit-section { background-color: #1e293b; color: #f8fafc; margin-top: 10px; }
-        .audit-section .section-title { color: #38bdf8; border-left-color: #38bdf8; }
-        .audit-table th { background-color: #334155; color: #cbd5e1; border-bottom: 2px solid #475569; }
-        .audit-table td { background-color: #0f172a; color: #e2e8f0; border-bottom: 1px solid #334155; }
-        .audit-table tr:hover td { background-color: #1e293b; }
-        .log-timestamp { font-family: monospace; color: #94a3b8; }
-        .log-action { font-weight: 800; text-transform: uppercase; font-size: 10px; padding: 2px 6px; border-radius: 4px; display: inline-block; }
-        .log-create { background-color: #065f46; color: #a7f3d0; }
-        .log-update { background-color: #075985; color: #bae6fd; }
-        .log-delete { background-color: #991b1b; color: #fecaca; }
+        .audit-wrapper-collapse { 
+          display: none; 
+        }
+        .audit-section { 
+          background-color: #1e293b; 
+          color: #f8fafc; 
+          margin-top: 10px; 
+        }
+        .audit-section .section-title { 
+          color: #38bdf8; 
+          border-left-color: #38bdf8; 
+        }
+        .audit-table th { 
+          background-color: #334155; 
+          color: #cbd5e1; 
+          border-bottom: 2px solid #475569; 
+        }
+        .audit-table td { 
+          background-color: #0f172a; 
+          color: #e2e8f0; 
+          border-bottom: 1px solid #334155; 
+        }
+        .audit-table tr:hover td { 
+          background-color: #1e293b; 
+        }
+        .log-timestamp { 
+          font-family: monospace; 
+          color: #94a3b8; 
+        }
+        .log-action { 
+          font-weight: 800; 
+          text-transform: uppercase; 
+          font-size: 10px; 
+          padding: 2px 6px; 
+          border-radius: 4px; 
+          display: inline-block; 
+        }
+        .log-create { 
+          background-color: #065f46; 
+          color: #a7f3d0; 
+        }
+        .log-update { 
+          background-color: #075985; 
+          color: #bae6fd; 
+        }
+        .log-delete { 
+          background-color: #991b1b; 
+          color: #fecaca; 
+        }
 
         .modal-overlay {
           display: none;
@@ -284,6 +460,11 @@
           display: flex;
           flex-direction: column;
           overflow: hidden;
+          animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+          from { transform: scale(0.95); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
         }
         .modal-header {
           background-color: var(--pharma-accent-primary);
@@ -293,24 +474,94 @@
           justify-content: space-between;
           align-items: center;
         }
-        .modal-header h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
-        .modal-close-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; opacity: 0.8; }
-        .modal-close-btn:hover { opacity: 1; }
-        .modal-content { padding: 24px; overflow-y: auto; }
-        .view-details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-        .detail-item { border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
-        .detail-item .detail-label { font-size: 11px; font-weight: 700; color: var(--pharma-text-muted); text-transform: uppercase; margin-bottom: 4px; }
-        .detail-item .detail-value { font-size: 13px; color: var(--pharma-text-main); word-break: break-word; white-space: pre-wrap; font-weight: 500; }
-        .modal-footer { padding: 14px 24px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: right; }
+        .modal-header h3 { 
+          margin: 0; 
+          font-size: 16px; 
+          font-weight: 700; 
+          letter-spacing: 0.5px; 
+        }
+        .modal-close-btn { 
+          background: none; 
+          border: none; 
+          color: white; 
+          font-size: 22px; 
+          cursor: pointer; 
+          opacity: 0.8; 
+          transition: opacity 0.2s;
+        }
+        .modal-close-btn:hover { 
+          opacity: 1; 
+        }
+        .modal-content { 
+          padding: 24px; 
+          overflow-y: auto; 
+          flex: 1;
+        }
+        .view-details-grid { 
+          display: grid; 
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+          gap: 16px; 
+        }
+        .detail-item { 
+          border-bottom: 1px solid #f1f5f9; 
+          padding-bottom: 8px; 
+        }
+        .detail-item .detail-label { 
+          font-size: 11px; 
+          font-weight: 700; 
+          color: var(--pharma-text-muted); 
+          text-transform: uppercase; 
+          margin-bottom: 4px; 
+        }
+        .detail-item .detail-value { 
+          font-size: 13px; 
+          color: var(--pharma-text-main); 
+          word-break: break-word; 
+          white-space: pre-wrap; 
+          font-weight: 500; 
+        }
+        .modal-footer { 
+          padding: 14px 24px; 
+          background-color: #f8fafc; 
+          border-top: 1px solid #e2e8f0; 
+          text-align: right; 
+        }
+
+        .export-buttons {
+          display: flex;
+          gap: 10px;
+          margin-top: 15px;
+        }
+        .btn-export {
+          padding: 8px 16px;
+          font-size: 12px;
+          background-color: #0891b2;
+        }
+        .btn-export:hover {
+          background-color: #0e7490;
+        }
+
+        @media (max-width: 768px) {
+          .search-wrapper {
+            width: 100%;
+          }
+          .table-toolbar {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          header {
+            padding: 16px;
+          }
+        }
     </style>
 </head>
 <body>
 
 <header>
   <div class="brand-block">
-    <span class="industry-badge">GMP MULTI-MASTER DATA REGISTRY</span>
+    <span class="industry-badge">🔬 GMP MULTI-MASTER DATA REGISTRY</span>
     <h1>Master List Supplier Evaluation</h1>
-    <div class="session-info">Authorized Session: Quality Management Team</div>
+    <div class="session-info">v2.0 | Authorized Session: Quality Management Team</div>
   </div>
   
   <div class="live-clock-widget">
@@ -323,15 +574,15 @@
 </header>
 
 <div class="tab-container">
-  <button class="tab-btn active" onclick="switchMaster('api_material')">1. API (주원료)</button>
-  <button class="tab-btn" onclick="switchMaster('excipient')">2. Excipients (부형제)</button>
-  <button class="tab-btn" onclick="switchMaster('packaging')">3. Packaging Materials (포장자재)</button>
-  <button class="tab-btn" onclick="switchMaster('service_provider')">4. Service Providers (서비스업체)</button>
-  <button class="tab-btn" onclick="switchMaster('consumable')">5. Consumables (소모품)</button>
+  <button class="tab-btn active" onclick="switchMaster('api_material')">🧪 1. API (주원료)</button>
+  <button class="tab-btn" onclick="switchMaster('excipient')">⚗️ 2. Excipients (부형제)</button>
+  <button class="tab-btn" onclick="switchMaster('packaging')">📦 3. Packaging (포장자재)</button>
+  <button class="tab-btn" onclick="switchMaster('service_provider')">🏢 4. Service Providers (서비스)</button>
+  <button class="tab-btn" onclick="switchMaster('consumable')">🔧 5. Consumables (소모품)</button>
 </div>
 
 <section class="section-container" id="form-container">
-  <h3 id="form-title" class="section-title">Add New Record</h3>
+  <h3 id="form-title" class="section-title">➕ Add New Record</h3>
   
   <div id="master-form-div">
     <input type="hidden" id="edit-index" value="">
@@ -340,20 +591,22 @@
     <div class="form-grid" id="dynamic-form-fields"></div>
     
     <div class="form-group" id="reason-wrapper" style="display:none; margin-bottom: 15px; max-width: 500px;">
-      <label style="color: var(--gmp-state-danger);">Reason for Modification *</label>
+      <label style="color: var(--gmp-state-danger);">⚠️ Reason for Modification *</label>
       <input type="text" id="gmp-reason" placeholder="State reason for amending this record (Required)">
     </div>
 
-    <button type="button" class="btn" id="btn-submit" onclick="executeSaveData()">Save to Master Data</button>
-    <button type="button" class="btn btn-cancel" id="btn-cancel" style="display:none;" onclick="resetForm()">Cancel Edit</button>
+    <div style="display: flex; gap: 10px;">
+      <button type="button" class="btn" id="btn-submit" onclick="executeSaveData()">💾 Save to Master Data</button>
+      <button type="button" class="btn btn-cancel" id="btn-cancel" style="display:none;" onclick="resetForm()">❌ Cancel Edit</button>
+    </div>
   </div>
 </section>
 
 <section class="section-container">
   <div class="table-toolbar">
-    <h3 class="section-title" id="table-title" style="margin-bottom:0;">Active Database Registry</h3>
+    <h3 class="section-title" id="table-title" style="margin-bottom:0;">📊 Active Database Registry</h3>
     <div class="search-wrapper">
-      <input type="text" id="table-search" oninput="renderTable()" placeholder="Live search across Hangeul & English...">
+      <input type="text" id="table-search" oninput="renderTable()" placeholder="🔍 Live search (Hangeul & English)...">
     </div>
   </div>
   <div class="data-table-viewport">
@@ -364,8 +617,13 @@
   </div>
   
   <div class="table-counter-summary">
-    <span>Total Registered Records:</span>
+    <span>📈 Total Registered Records:</span>
     <span class="counter-badge" id="data-total-counter">0</span>
+  </div>
+
+  <div class="export-buttons">
+    <button type="button" class="btn btn-export" onclick="exportTableAsCSV()">📥 Export as CSV</button>
+    <button type="button" class="btn btn-export" onclick="exportTableAsJSON()">📥 Export as JSON</button>
   </div>
 </section>
 
@@ -376,7 +634,7 @@
 
 <div class="audit-wrapper-collapse" id="audit-collapse-area">
   <section class="section-container audit-section">
-    <h3 class="section-title">Data Integrity Audit Trail Log</h3>
+    <h3 class="section-title">🔐 Data Integrity Audit Trail Log</h3>
     <p style="font-size:11px; color:#94a3b8; margin:-15px 0 15px 0;">Immutable tracking history of creation, update, and deletion actions executed on this workstation.</p>
     <div class="data-table-viewport" style="border-color:#334155;">
       <table class="enterprise-data-matrix audit-table">
@@ -393,13 +651,16 @@
         <tbody id="audit-log-body"></tbody>
       </table>
     </div>
+    <div style="margin-top: 15px;">
+      <button type="button" class="btn btn-export" onclick="exportAuditLogs()">📥 Export Audit Logs</button>
+    </div>
   </section>
 </div>
 
 <div class="modal-overlay" id="view-modal">
   <div class="modal-wrapper">
     <div class="modal-header">
-      <h3 id="modal-title">Master Data Record Viewer</h3>
+      <h3 id="modal-title">📋 Master Data Record Viewer</h3>
       <button class="modal-close-btn" onclick="closeViewModal()">&times;</button>
     </div>
     <div class="modal-content">
@@ -411,7 +672,10 @@
   </div>
 </div>
 
+<!-- Script Files -->
+<script src="config.js"></script>
 <script src="database.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
